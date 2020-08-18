@@ -12,6 +12,7 @@ import org.junit.Test;
 import org.springframework.http.ResponseEntity;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -126,6 +127,10 @@ public class OrderControllerTest {
         user.getCart().addItem(getTestItem());
         UserOrder order2 = UserOrder.createFromCart(user.getCart());
 
-        return List.of(order1, order2);
+        List<UserOrder> orders = new ArrayList<>();
+        orders.add(order1);
+        orders.add(order2);
+
+        return orders;
     }
 }

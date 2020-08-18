@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.springframework.http.ResponseEntity;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,9 +28,12 @@ public class ItemControllerTest {
         itemController = new ItemController();
         TestUtils.injectObjects(itemController, "itemRepository", itemRepository);
 
+        List<Item> itemsList = new ArrayList<>();
+        itemsList.add(getTestItem());
+
         when(itemRepository.findById(1L)).thenReturn(Optional.of(getTestItem()));
-        when(itemRepository.findByName("Round Widget")).thenReturn(List.of(getTestItem()));
-        when(itemRepository.findByName("Square Widget")).thenReturn(List.of());
+        when(itemRepository.findByName("Round Widget")).thenReturn(itemsList);
+        when(itemRepository.findByName("Square Widget")).thenReturn(new ArrayList<>());
     }
 
     @Test
