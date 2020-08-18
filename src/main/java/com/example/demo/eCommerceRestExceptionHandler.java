@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.convert.ConversionFailedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,6 +24,16 @@ public class eCommerceRestExceptionHandler {
     public ResponseEntity<?> handleGeneralException(Exception ex) {
         log.error("Exception caught: " + ex.getMessage(), ex);
         return new ResponseEntity<>("An error happened on the server.", HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    /**
+     * Catch all HttpRequestMethodNotSupportedException
+     */
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    @ResponseBody
+    public ResponseEntity<?> handleHttpMethodNotSupported(Exception ex) {
+        log.error("Exception caught: " + ex.getMessage(), ex);
+        return new ResponseEntity<>("Request http method is not supported.", HttpStatus.NOT_FOUND);
     }
 
     /**
